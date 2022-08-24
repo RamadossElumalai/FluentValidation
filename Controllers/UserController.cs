@@ -31,6 +31,9 @@ namespace FluentValidationDemo.Controllers
         [HttpPost("AddUser")]
         public async Task<ActionResult> AddUser(User user)
         {
+            // It will throw exception when validations fails
+            //await _validator.ValidateAndThrowAsync(user)
+
             var result = await _validator.ValidateAsync(user);
             if (!result.IsValid){
                 return BadRequest(result.Errors);

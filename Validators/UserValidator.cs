@@ -27,36 +27,4 @@ namespace FluentValidationDemo.Validators
             Include(new ComplexValidator());
         }
     }
-
-    public class SimpleValidator : AbstractValidator<User>
-    {
-        public SimpleValidator()
-        {
-            RuleFor(u => u.Name).NotNull().NotEmpty().WithMessage("Name is required");
-            RuleFor(u => u.Email).NotNull().NotEmpty().WithMessage("Email is required")
-                .EmailAddress().WithMessage("Please provide valid email address");
-        }
-    }
-
-    public class ComplexValidator : AbstractValidator<User>
-    {
-        public ComplexValidator()
-        {
-            RuleFor(u => u.Address).NotNull().NotEmpty().WithMessage("Address is required")
-                .MaximumLength(10).WithMessage("Address charecter lenght should not be more then 10 Charecters");
-            RuleFor(u => u.Address)
-                .Must(a => a?.ToLower().Contains("street") == true)
-                .WithMessage("Address must contain street");
-            RuleForEach(u => u.MemberShips)
-                .SetValidator(new MemeberShipValidator());
-        }
-    }
-
-    public class MemeberShipValidator : AbstractValidator<MemeberShip>
-    {
-        public MemeberShipValidator()
-        {
-            RuleFor(x => x.Name).NotEmpty().NotNull().WithMessage("Name is required");
-        }
-    }
 }
