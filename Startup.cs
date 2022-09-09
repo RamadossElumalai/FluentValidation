@@ -17,6 +17,8 @@ using System.Reflection;
 using FluentValidationDemo.Models;
 using FluentValidationDemo.Validators;
 using FluentValidation;
+using Swashbuckle.AspNetCore.Filters;
+using FluentValidationDemo.SampleRequest;
 
 namespace FluentValidationDemo
 {
@@ -35,7 +37,11 @@ namespace FluentValidationDemo
             services.AddControllers();
             services.AddTransient<IValidator<User>, UserValidator>();
             //adding swagger di
-            services.AddSwaggerGen();
+            services.AddSwaggerExamplesFromAssemblyOf<Program>();
+            services.AddSwaggerGen(s =>
+            {
+                s.ExampleFilters();
+            });
 
         }
 
